@@ -43,6 +43,7 @@
 enum BMP388_BUS {
 	BMP388_BUS_ALL = 0,
 	BMP388_BUS_I2C_INTERNAL,
+	BMP388_BUS_I2C_INTERNAL1,
 	BMP388_BUS_I2C_EXTERNAL,
 	BMP388_BUS_SPI_INTERNAL,
 	BMP388_BUS_SPI_EXTERNAL
@@ -327,6 +328,9 @@ struct bmp388_bus_option {
 #if defined(PX4_I2C_BUS_ONBOARD) && defined(PX4_I2C_OBDEV_BMP388)
 	{ BMP388_BUS_I2C_INTERNAL, "/dev/bmp388_i2c_int", &bmp388_i2c_interface, PX4_I2C_BUS_ONBOARD, PX4_I2C_OBDEV_BMP388, false, NULL },
 #endif
+#if defined(PX4_I2C_BUS_ONBOARD) && defined(PX4_I2C_OBDEV1_BMP388)
+	{ BMP388_BUS_I2C_INTERNAL1, "/dev/bmp388_i2c_int1", &bmp388_i2c_interface, PX4_I2C_BUS_ONBOARD, PX4_I2C_OBDEV1_BMP388, false, NULL },
+#endif
 #if defined(PX4_I2C_BUS_EXPANSION) && defined(PX4_I2C_OBDEV_BMP388)
 	{ BMP388_BUS_I2C_EXTERNAL, "/dev/bmp388_i2c_ext", &bmp388_i2c_interface, PX4_I2C_BUS_EXPANSION, PX4_I2C_OBDEV_BMP388, true, NULL },
 #endif
@@ -484,7 +488,7 @@ bmp388_main(int argc, char *argv[])
 	const char *myoptarg = nullptr;
 	enum BMP388_BUS busid = BMP388_BUS_ALL;
 
-	while ((ch = px4_getopt(argc, argv, "XISs", &myoptind, &myoptarg)) != EOF) {
+	while ((ch = px4_getopt(argc, argv, "XIJSs", &myoptind, &myoptarg)) != EOF) {
 		switch (ch) {
 		case 'X':
 			busid = BMP388_BUS_I2C_EXTERNAL;
@@ -492,6 +496,10 @@ bmp388_main(int argc, char *argv[])
 
 		case 'I':
 			busid = BMP388_BUS_I2C_INTERNAL;
+			break;
+
+		case 'J':
+			busid = BMP388_BUS_I2C_INTERNAL1;
 			break;
 
 		case 'S':
