@@ -61,7 +61,7 @@
 #define BMP388_ADDR_CTRL	0xF4	/* controll */
 #define BMP388_ADDR_STATUS	0xF3	/* state */
 #define BMP388_ADDR_RESET	0xE0	/* reset */
-#define BMP388_ADDR_ID		0xD0	/* id */
+#define BMP388_ADDR_ID		0x00	/* id */
 
 #define BMP388_VALUE_ID		0x50	/* chip id */
 #define BMP388_VALUE_RESET	0xB6	/* reset */
